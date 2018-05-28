@@ -1,8 +1,6 @@
 package com.capgemini.assesment.web.rest.request.customer;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * Created by ayhanugurlu on 5/26/18.
@@ -10,6 +8,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 public class AddCustomerRequest {
     private String nationalityId;
     private String name;
