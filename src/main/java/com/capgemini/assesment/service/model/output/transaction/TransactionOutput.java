@@ -1,6 +1,5 @@
 package com.capgemini.assesment.service.model.output.transaction;
 
-import com.capgemini.assesment.data.entity.TransactionStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TransactionOutput {
 
-    private TransactionStatus status;
+    private long id;
 
 }

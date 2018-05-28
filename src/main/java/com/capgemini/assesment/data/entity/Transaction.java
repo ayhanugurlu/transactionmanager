@@ -21,5 +21,4 @@ public class Transaction {
     @ManyToOne(fetch= FetchType.LAZY)
     private Account account;
     private long amount;
-    private TransactionStatus transactionStatus;
 }
