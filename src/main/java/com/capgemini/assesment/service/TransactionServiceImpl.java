@@ -58,7 +58,7 @@ public class TransactionServiceImpl implements TransactionService{
         account.get().setBalance(total);
         transaction.setAccount(account.get());
         transaction.setTransactionDate(new Date());
-        transactionRepository.save(transaction);
+        transaction = transactionRepository.save(transaction);
         TransactionResultOutput transactionResultOutput = mapperFacade.map(transaction,TransactionResultOutput.class);
         return transactionResultOutput;
     }

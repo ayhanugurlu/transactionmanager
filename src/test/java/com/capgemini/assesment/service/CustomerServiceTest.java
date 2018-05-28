@@ -57,12 +57,35 @@ public class CustomerServiceTest {
         when(tracer.getCurrentSpan()).thenReturn(span);
         Customer customer = Customer.builder().id(2).nationalityId("a").name("name").surname("surname").build();
         when(customerRepository.findOne(2l)).thenReturn(customer);
+        when(customerRepository.findOne(3l)).thenReturn(null);
         when(customerRepository.findByNationalityId("a")).thenReturn(Optional.of(customer));
         when(customerRepository.findByNationalityId("c")).thenReturn(Optional.empty());
     }
 
+
+    @Test
+    public void getCustomerTest() throws CustomerNotFound {
+
+        try {
+            GetCustomerOutput getCustomerOutput = customerService.getCustomer(3);
+        }catch (CustomerNotFound customerNotFound){
+
+        }
+        GetCustomerOutput getCustomerOutput = customerService.getCustomer(2);
+        Assert.assertEquals(getCustomerOutput.getId(), 2);
+        Assert.assertEquals(getCustomerOutput.getName(), "name");
+        Assert.assertEquals(getCustomerOutput.getSurname(), "surname");
+        Assert.assertEquals(getCustomerOutput.getNationalityId(), "a");
+    }
+
     @Test
     public void getCustomerByNationalityIdTest() throws CustomerNotFound {
+
+        try {
+            GetCustomerOutput getCustomerOutput = customerService.getCustomerByNationalityId("c");
+        }catch (CustomerNotFound customerNotFound){
+
+        }
         GetCustomerOutput getCustomerOutput = customerService.getCustomerByNationalityId("a");
         Assert.assertEquals(getCustomerOutput.getId(), 2);
         Assert.assertEquals(getCustomerOutput.getName(), "name");
