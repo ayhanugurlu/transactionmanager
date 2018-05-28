@@ -1,8 +1,6 @@
 package com.capgemini.assesment.data.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +13,8 @@ import javax.persistence.Id;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 @Entity
 public class Customer {
 

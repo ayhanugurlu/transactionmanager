@@ -1,18 +1,20 @@
 package com.capgemini.assesment.service.model.output.account;
 
-/**
- * Created by ayhanugurlu on 5/26/18.
- */
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
+/**
+ * Created by ayhanugurlu on 5/27/18.
+ */
 @Setter
 @Getter
 @NoArgsConstructor
-public class AddCustomerAccountOutput {
-    private long id;
-    private long ownerId;
-    private String currencyType;
+public class TransactionOutput {
+
+    private long amount;
+    private Date transactionDate;
+
 }

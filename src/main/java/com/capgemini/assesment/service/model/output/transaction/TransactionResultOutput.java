@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class TransactionOutput {
+public class TransactionResultOutput {
 
     private long id;
 

@@ -39,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public GetCustomerOutput getCustomer(long id) throws CustomerNotFound {
         logger.debug("getCustomer method start", tracer.getCurrentSpan().getTraceId());
-        Optional<Customer> customer =Optional.of(repository.findOne(id));
+        Optional<Customer> customer =Optional.ofNullable(repository.findOne(id));
         GetCustomerOutput output = mapperFacade.map(customer.orElseThrow(()->new CustomerNotFound()), GetCustomerOutput.class);
         logger.debug("getCustomer method finish", tracer.getCurrentSpan().getTraceId());
         return output;
@@ -62,7 +62,6 @@ public class CustomerServiceImpl implements CustomerService{
         if(customer.isPresent()){
             throw new CustomerAlreadyExist();
         }
-
         Customer newCust = repository.save(mapperFacade.map(addCustomerInput,Customer.class));
         AddCustomerOutput addCustomerOutput = mapperFacade.map(newCust,AddCustomerOutput.class);
         logger.debug("addCustomer method start", tracer.getCurrentSpan().getTraceId());

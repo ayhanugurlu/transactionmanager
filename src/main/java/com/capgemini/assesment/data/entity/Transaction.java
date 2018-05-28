@@ -1,10 +1,9 @@
 package com.capgemini.assesment.data.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by ayhanugurlu on 5/27/18.
@@ -12,6 +11,8 @@ import javax.persistence.*;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 @Entity
 public class Transaction {
 
@@ -21,4 +22,5 @@ public class Transaction {
     @ManyToOne(fetch= FetchType.LAZY)
     private Account account;
     private long amount;
+    private Date transactionDate;
 }
