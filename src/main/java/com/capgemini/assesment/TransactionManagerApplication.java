@@ -16,7 +16,7 @@ import org.springframework.context.event.EventListener;
 import javax.annotation.PostConstruct;
 
 @SpringBootApplication
-public class TransactionmanagerApplication {
+public class TransactionManagerApplication {
 
 	private static Logger logger = LoggerFactory.getLogger(TransactionmanagerApplication.class);
 
@@ -27,7 +27,7 @@ public class TransactionmanagerApplication {
 	CustomerService customerService;
 
 	public static void main(String[] args) {
-		SpringApplication.run(TransactionmanagerApplication.class, args);
+		SpringApplication.run(TransactionManagerApplication.class, args);
 	}
 
 

@@ -1,16 +1,13 @@
 package com.capgemini.assesment.service.mapper;
 
-import com.capgemini.assesment.TransactionmanagerApplication;
+import com.capgemini.assesment.TransactionManagerApplication;
 import com.capgemini.assesment.data.entity.Account;
 import com.capgemini.assesment.data.entity.Customer;
 import com.capgemini.assesment.data.entity.Transaction;
 import com.capgemini.assesment.service.model.input.account.AddCustomerAccountInput;
-import com.capgemini.assesment.service.model.input.customer.AddCustomerInput;
 import com.capgemini.assesment.service.model.output.account.AddCustomerAccountOutput;
 import com.capgemini.assesment.service.model.output.account.GetAccountTransactionOutput;
 import com.capgemini.assesment.service.model.output.account.TransactionOutput;
-import com.capgemini.assesment.service.model.output.customer.AddCustomerOutput;
-import com.capgemini.assesment.service.model.output.customer.GetCustomerOutput;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +23,7 @@ import java.util.*;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration(classes = TransactionmanagerApplication.class)
+@ContextConfiguration(classes = TransactionManagerApplication.class)
 public class AccountServiceMapperTest {
 
 

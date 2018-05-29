@@ -1,14 +1,12 @@
 package com.capgemini.assesment.web.rest;
 
-import com.capgemini.assesment.TransactionmanagerApplication;
-import com.capgemini.assesment.service.model.input.account.AddCustomerAccountInput;
+import com.capgemini.assesment.TransactionManagerApplication;
 import com.capgemini.assesment.web.rest.request.account.AddCustomerAccountRequest;
 import com.capgemini.assesment.web.rest.request.customer.AddCustomerRequest;
 import com.capgemini.assesment.web.rest.request.transaction.TransactionRequest;
 import com.capgemini.assesment.web.rest.response.account.AddCustomerAccountResponse;
 import com.capgemini.assesment.web.rest.response.account.GetAccountTransactionResponse;
 import com.capgemini.assesment.web.rest.response.customer.AddCustomerResponse;
-import com.capgemini.assesment.web.rest.response.customer.GetCustomerResponse;
 import com.capgemini.assesment.web.rest.response.transaction.TransactionResponse;
 import org.junit.Assert;
 import org.junit.Before;
@@ -24,7 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * Created by ayhanugurlu on 5/28/18.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = TransactionmanagerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = TransactionManagerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AccountRestTest {
 
     TestRestTemplate restTemplate = new TestRestTemplate();
