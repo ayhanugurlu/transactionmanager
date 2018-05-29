@@ -1,11 +1,8 @@
 package com.capgemini.assesment.service.mapper;
 
-import com.capgemini.assesment.TransactionmanagerApplication;
+import com.capgemini.assesment.TransactionManagerApplication;
 import com.capgemini.assesment.data.entity.Customer;
-import com.capgemini.assesment.data.entity.Transaction;
 import com.capgemini.assesment.service.model.input.customer.AddCustomerInput;
-import com.capgemini.assesment.service.model.input.transaction.TransactionInput;
-import com.capgemini.assesment.service.model.output.account.TransactionOutput;
 import com.capgemini.assesment.service.model.output.customer.AddCustomerOutput;
 import com.capgemini.assesment.service.model.output.customer.GetCustomerOutput;
 import org.junit.Assert;
@@ -16,14 +13,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Date;
-
 /**
  * Created by Ayhan.Ugurlu on 28/05/2018
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration(classes = TransactionmanagerApplication.class)
+@ContextConfiguration(classes = TransactionManagerApplication.class)
 public class CustomerServiceMapperTest {
 
 

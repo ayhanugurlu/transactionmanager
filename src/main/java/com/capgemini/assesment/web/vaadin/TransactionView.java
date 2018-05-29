@@ -9,6 +9,8 @@ import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
+
 /**
  * Created by Ayhan.Ugurlu on 29/05/2018
  */
@@ -19,10 +21,9 @@ public class TransactionView  extends VerticalLayout implements View {
     @Autowired
     CustomerService customerService;
 
-    public TransactionView(){
-
+    @PostConstruct
+    public void init(){
         this.addComponent(buildCustomer());
-
     }
 
     private Component buildCustomer(){
@@ -46,10 +47,16 @@ public class TransactionView  extends VerticalLayout implements View {
             content.addComponent(nationalityId);
             Button add = new Button("add");
             content.addComponent(add);
-            add.addClickListener(event1 -> {
-                ;
+            add.addClickListener(clickEvent -> {
                 try {
-                    customerService.addCustomer(AddCustomerInput.builder().name(name.getValue()).surname(surname.getValue()).nationalityId(nationalityId.getValue()).build());
+                    customerService.addCustomer(
+                        AddCustomerInput
+                            .builder()
+                            .name(name.getValue())
+                            .surname(surname.getValue())
+                            .nationalityId(nationalityId.getValue())
+                            .build()
+                    );
                 } catch (CustomerAlreadyExist customerAlreadyExist) {
                     Notification.show(customerAlreadyExist.getMessage(),Notification.Type.ERROR_MESSAGE);
                 }
