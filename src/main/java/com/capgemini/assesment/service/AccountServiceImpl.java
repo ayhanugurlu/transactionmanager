@@ -6,7 +6,9 @@ import com.capgemini.assesment.data.repository.AccountRepository;
 import com.capgemini.assesment.data.repository.CustomerRepository;
 import com.capgemini.assesment.service.exception.AccountNotFound;
 import com.capgemini.assesment.service.exception.CustomerNotFound;
+import com.capgemini.assesment.service.exception.InsufficientBalance;
 import com.capgemini.assesment.service.model.input.account.AddCustomerAccountInput;
+import com.capgemini.assesment.service.model.input.transaction.TransactionInput;
 import com.capgemini.assesment.service.model.output.account.AddCustomerAccountOutput;
 import com.capgemini.assesment.service.model.output.account.GetAccountTransactionOutput;
 import com.capgemini.assesment.service.model.output.account.TransactionOutput;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.ConstraintViolationException;
 import java.sql.SQLException;
@@ -42,16 +45,26 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     AccountRepository accountRepository;
+
     @Autowired
     CustomerRepository customerRepository;
 
+    @Autowired
+    TransactionService transactionService;
 
+
+    @Transactional
     @Override
-    public AddCustomerAccountOutput addAccount(AddCustomerAccountInput addCustomerAccountInput) throws CustomerNotFound {
+    public AddCustomerAccountOutput addAccount(AddCustomerAccountInput addCustomerAccountInput) throws CustomerNotFound, AccountNotFound, InsufficientBalance {
         logger.debug("addAccount method start", tracer.getCurrentSpan().getTraceId());
         Optional.ofNullable(customerRepository.findOne(addCustomerAccountInput.getOwnerId())).orElseThrow(() -> new CustomerNotFound());
         Account account = mapperFacade.map(addCustomerAccountInput, Account.class);
+        if(addCustomerAccountInput.getAmount() <0){
+            throw new InsufficientBalance();
+        }
         account = accountRepository.save(account);
+        TransactionInput transactionInput = TransactionInput.builder().amount(addCustomerAccountInput.getAmount()).accountId(account.getId()).build();
+        transactionService.doTransaction(transactionInput);
         AddCustomerAccountOutput addCustomerAccountOutput = mapperFacade.map(account, AddCustomerAccountOutput.class);
         logger.debug("addAccount method finish", tracer.getCurrentSpan().getTraceId());
         return addCustomerAccountOutput;

@@ -13,4 +13,5 @@ import lombok.*;
 public class AddCustomerAccountInput {
     private long ownerId;
     private String currencyType;
+    private long amount;
 }

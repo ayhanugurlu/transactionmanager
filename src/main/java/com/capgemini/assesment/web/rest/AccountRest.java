@@ -4,6 +4,7 @@ import com.capgemini.assesment.service.AccountService;
 import com.capgemini.assesment.service.exception.AccountNotFound;
 import com.capgemini.assesment.service.exception.CustomerAlreadyExist;
 import com.capgemini.assesment.service.exception.CustomerNotFound;
+import com.capgemini.assesment.service.exception.InsufficientBalance;
 import com.capgemini.assesment.service.model.input.account.AddCustomerAccountInput;
 import com.capgemini.assesment.service.model.output.account.AddCustomerAccountOutput;
 import com.capgemini.assesment.service.model.output.account.GetAccountTransactionOutput;
@@ -50,7 +51,7 @@ public class AccountRest {
             notes = "add account for customer<br/>")
     @PostMapping("addAccount")
     public @ResponseBody
-    AddCustomerAccountResponse addAccount(@ApiParam(value = "owner id, currency type, amount") @RequestBody AddCustomerAccountRequest addCustomerAccountRequest) throws CustomerNotFound {
+    AddCustomerAccountResponse addAccount(@ApiParam(value = "owner id, currency type, amount") @RequestBody AddCustomerAccountRequest addCustomerAccountRequest) throws CustomerNotFound, AccountNotFound, InsufficientBalance {
         logger.debug("addAccount method start", tracer.getCurrentSpan().getTraceId());
         AddCustomerAccountInput input = mapperFacade.map(addCustomerAccountRequest, AddCustomerAccountInput.class);
         AddCustomerAccountOutput output = accountService.addAccount(input);
