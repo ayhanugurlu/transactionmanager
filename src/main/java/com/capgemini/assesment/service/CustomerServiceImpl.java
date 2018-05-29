@@ -39,6 +39,13 @@ public class CustomerServiceImpl implements CustomerService{
     CustomerRepository repository;
 
     @Override
+    public List<GetCustomerOutput> getAllCustomer() {
+        List<GetCustomerOutput> customerOutputs = new ArrayList<>();
+        repository.findAll().forEach(customer -> customerOutputs.add(mapperFacade.map(customer,GetCustomerOutput.class)));
+        return customerOutputs;
+    }
+
+    @Override
     public GetCustomerOutput getCustomer(long id) throws CustomerNotFound {
         logger.debug("getCustomer method start", tracer.getCurrentSpan().getTraceId());
         Optional<Customer> customer =Optional.ofNullable(repository.findOne(id));
