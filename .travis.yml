@@ -4,3 +4,11 @@ jdk:
 script: mvn clean install
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: sig5sNlsMMAtLNFKVjb24WZGSqY6sMrfkXn4qc06/Bj9vXFoEMj2xp+22tw04B9IemtP3TB8X2Q/cR+FgTdJSiLCao3MCIs7tF/FnKiuk0ahQ5jKumxHfPlf5uZDRrCBLJ/Nmh0nCz1/9t4dNZXT4asfmSXVcKrCziHl+XfQSu7DZ7num0GMzGK4ze7M8E4vum7FQ8PRzbnIyXlbU5ACa58IQzONayeInTT9r/cshnOWRTEyX+m3mheE+kdn8fqBax1pLA6UxaoV8djc8h5QcJf+NkvRL0Ab6mNK+4TQg1n2rpp+kvVCHKBqnDsOSBP0fpbzC2X1MegsOx/MQK7wTg0sHR2wOfYLSHNzcEdAo+V5hBE+QL+ir4cuH+7WsDgL2qSPlrgMoX047DcEyhQWCJUs3Jx7hcRlIUHCMTEC9AUlBXAYYou3XH1NO3KSwo0B1oipGAdRHN7OT+eFUIS1w0ckdE2bApwJF2nZiqusWmGOc5oyAJ8f7geIbHpJuBvG8+C8zN9szy5YkArmIv0ZZdvwvi1UqGa8RRcEo+R6ngn4NVaqFRXo3CXEgOvqgom0WpUlC2HZu+127YFDMCB2XckVNDlh8diPvKw1ZCAWvIPin5BYa6unh5gcIYhqLjHbJRFAszuo9KoRkaUF2uY5ZWpfNRyWZfhVOoS38+Kei5Y=
+  app: ayhan-transactionmanager
+  on:
+    repo: ayhanugurlu/transactionmanager
