@@ -62,7 +62,7 @@ public class CustomerRestTest {
         getCustomerResponseResponseEntity = restTemplate.exchange(createURLWithPort("/getCustomer/12"),
                 HttpMethod.GET,entity, GetCustomerResponse.class);
         Assert.assertEquals(getCustomerResponseResponseEntity.getStatusCode(),HttpStatus.OK);
-        Assert.assertEquals(addCustomerResponseResponseEntity.getBody().getCustomerId().longValue(),getCustomerResponseResponseEntity.getBody().getId());
+        Assert.assertEquals(addCustomerResponseResponseEntity.getBody().getCustomerId(),getCustomerResponseResponseEntity.getBody().getId());
 
         //duplicate customer
         ResponseEntity<AddCustomerResponse> duplicateResponse = restTemplate.exchange(createURLWithPort("/addCustomer"),
@@ -75,7 +75,7 @@ public class CustomerRestTest {
         Assert.assertEquals(getCustomerResponseResponseEntity.getStatusCode(),HttpStatus.OK);
         Assert.assertEquals(getCustomerResponseResponseEntity.getBody().getName(),"name");
         Assert.assertEquals(getCustomerResponseResponseEntity.getBody().getSurname(),"surname");
-        Assert.assertEquals(addCustomerResponseResponseEntity.getBody().getCustomerId().longValue(),getCustomerResponseResponseEntity.getBody().getId());
+        Assert.assertEquals(addCustomerResponseResponseEntity.getBody().getCustomerId(),getCustomerResponseResponseEntity.getBody().getId());
 
     }
     private String createURLWithPort(String uri) {

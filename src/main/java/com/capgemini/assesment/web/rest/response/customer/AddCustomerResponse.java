@@ -11,5 +11,5 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class AddCustomerResponse {
-    private Long customerId;
+    private long customerId;
 }
