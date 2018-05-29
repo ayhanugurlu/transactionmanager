@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 /**
@@ -30,7 +31,6 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CustomerServiceTest {
-
 
     @Autowired
     private CustomerService customerService;
@@ -59,6 +59,7 @@ public class CustomerServiceTest {
         when(customerRepository.findOne(2l)).thenReturn(customer);
         when(customerRepository.findOne(3l)).thenReturn(null);
         when(customerRepository.findByNationalityId("a")).thenReturn(Optional.of(customer));
+        when(customerRepository.save(any(Customer.class))).thenReturn(customer);
         when(customerRepository.findByNationalityId("c")).thenReturn(Optional.empty());
     }
 

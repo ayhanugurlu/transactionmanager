@@ -40,9 +40,9 @@ public class AccountServiceTest {
 
     @MockBean
     AccountRepository accountRepository;
+
     @MockBean
     CustomerRepository customerRepository;
-
 
     @MockBean
     private Tracer tracer;
@@ -67,6 +67,6 @@ public class AccountServiceTest {
         AddCustomerAccountOutput addCustomerAccountOutput = accountService.addAccount(addCustomerAccountInput);
         Assert.assertEquals(addCustomerAccountOutput.getId(), 1l);
         Assert.assertEquals(addCustomerAccountOutput.getCurrencyType(), "TRY");
-        Assert.assertEquals(addCustomerAccountOutput.getOwnerId(), 2l);
+        Assert.assertEquals(addCustomerAccountOutput.getOwnerId(), 2);
     }
 }

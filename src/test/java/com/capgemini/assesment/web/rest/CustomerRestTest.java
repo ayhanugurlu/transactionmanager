@@ -52,12 +52,17 @@ public class CustomerRestTest {
         Assert.assertEquals(getCustomerResponseResponseEntity.getStatusCode(),HttpStatus.NOT_FOUND);
 
         //add customer
-        AddCustomerRequest addCustomerRequest = AddCustomerRequest.builder().name("name").surname("surname").nationalityId("tr").build();
+        AddCustomerRequest addCustomerRequest = AddCustomerRequest.builder().name("name").surname("surname").nationalityId("12").build();
         HttpEntity<AddCustomerRequest> addCustomerRequestHttpEntity = new HttpEntity<>(addCustomerRequest, headers);
         ResponseEntity<AddCustomerResponse> addCustomerResponseResponseEntity = restTemplate.exchange(createURLWithPort("/addCustomer"),
                 HttpMethod.POST, addCustomerRequestHttpEntity, AddCustomerResponse.class);
         Assert.assertEquals(addCustomerResponseResponseEntity.getStatusCode(),HttpStatus.OK);
-        Assert.assertEquals(addCustomerResponseResponseEntity.getBody().getCustomerId(),new Long(1));
+
+
+        getCustomerResponseResponseEntity = restTemplate.exchange(createURLWithPort("/getCustomer/12"),
+                HttpMethod.GET,entity, GetCustomerResponse.class);
+        Assert.assertEquals(getCustomerResponseResponseEntity.getStatusCode(),HttpStatus.OK);
+        Assert.assertEquals(addCustomerResponseResponseEntity.getBody().getCustomerId().longValue(),getCustomerResponseResponseEntity.getBody().getId());
 
         //duplicate customer
         ResponseEntity<AddCustomerResponse> duplicateResponse = restTemplate.exchange(createURLWithPort("/addCustomer"),
@@ -65,11 +70,12 @@ public class CustomerRestTest {
         Assert.assertEquals(duplicateResponse.getStatusCode(),HttpStatus.CONFLICT);
 
         ///get customer
-        getCustomerResponseResponseEntity = restTemplate.exchange(createURLWithPort("/getCustomer/tr"),
+        getCustomerResponseResponseEntity = restTemplate.exchange(createURLWithPort("/getCustomer/12"),
                 HttpMethod.GET,entity, GetCustomerResponse.class);
         Assert.assertEquals(getCustomerResponseResponseEntity.getStatusCode(),HttpStatus.OK);
-        Assert.assertEquals(getCustomerResponseResponseEntity.getBody().getId(),1);
         Assert.assertEquals(getCustomerResponseResponseEntity.getBody().getName(),"name");
+        Assert.assertEquals(getCustomerResponseResponseEntity.getBody().getSurname(),"surname");
+        Assert.assertEquals(addCustomerResponseResponseEntity.getBody().getCustomerId().longValue(),getCustomerResponseResponseEntity.getBody().getId());
 
     }
     private String createURLWithPort(String uri) {

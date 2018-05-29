@@ -67,13 +67,13 @@ public class TransactionRestTest {
         Assert.assertEquals(transactionResponseResponseEntity.getStatusCode(), HttpStatus.OK);
 
         //AccountNotFound
-        transactionRequest = TransactionRequest.builder().accountId(2).amount(10).build();
+        transactionRequest = TransactionRequest.builder().accountId(-1).amount(10).build();
         transactionRequestHttpEntity = new HttpEntity<>(transactionRequest, headers);
         transactionResponseResponseEntity = restTemplate.exchange(createURLWithPort("/doTransaction"), HttpMethod.POST, transactionRequestHttpEntity, TransactionResponse.class);
         Assert.assertEquals(transactionResponseResponseEntity.getStatusCode(), HttpStatus.NOT_FOUND);
 
         //InsufficientBalance
-        transactionRequest = TransactionRequest.builder().accountId(1).amount(-11).build();
+        transactionRequest = TransactionRequest.builder().accountId(1).amount(-110).build();
         transactionRequestHttpEntity = new HttpEntity<>(transactionRequest, headers);
         transactionResponseResponseEntity = restTemplate.exchange(createURLWithPort("/doTransaction"), HttpMethod.POST, transactionRequestHttpEntity, TransactionResponse.class);
         Assert.assertEquals(transactionResponseResponseEntity.getStatusCode(), HttpStatus.BAD_REQUEST);

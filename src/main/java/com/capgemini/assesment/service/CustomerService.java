@@ -6,6 +6,8 @@ import com.capgemini.assesment.service.model.input.customer.AddCustomerInput;
 import com.capgemini.assesment.service.model.output.customer.AddCustomerOutput;
 import com.capgemini.assesment.service.model.output.customer.GetCustomerOutput;
 
+import java.util.List;
+
 
 /**
  * Created by ayhanugurlu on 5/26/18.
