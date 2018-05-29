@@ -6,6 +6,7 @@ import com.capgemini.assesment.data.entity.Transaction;
 import com.capgemini.assesment.service.model.input.account.AddCustomerAccountInput;
 import com.capgemini.assesment.service.model.input.customer.AddCustomerInput;
 import com.capgemini.assesment.service.model.output.account.AddCustomerAccountOutput;
+import com.capgemini.assesment.service.model.output.account.GetAccountOutput;
 import com.capgemini.assesment.service.model.output.account.GetAccountTransactionOutput;
 import com.capgemini.assesment.service.model.output.account.TransactionOutput;
 import com.capgemini.assesment.service.model.output.customer.AddCustomerOutput;
@@ -39,6 +40,12 @@ public class AccountServiceMapper extends ConfigurableMapper {
                 .register();
 
         factory.classMap(Transaction.class, TransactionOutput.class).byDefault()
+                .register();
+
+
+        factory.classMap(Account.class, GetAccountOutput.class)
+                .field("customer.id", "ownerId")
+                .byDefault()
                 .register();
 
     }

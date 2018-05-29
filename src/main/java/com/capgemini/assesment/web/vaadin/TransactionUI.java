@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Created by Ayhan.Ugurlu on 29/05/2018
  */
-@SpringUI(path = "test")
+@SpringUI(path = "assesment")
 public class TransactionUI extends UI {
 
     @Autowired

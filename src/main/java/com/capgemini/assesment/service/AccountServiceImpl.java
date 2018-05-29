@@ -10,6 +10,7 @@ import com.capgemini.assesment.service.exception.InsufficientBalance;
 import com.capgemini.assesment.service.model.input.account.AddCustomerAccountInput;
 import com.capgemini.assesment.service.model.input.transaction.TransactionInput;
 import com.capgemini.assesment.service.model.output.account.AddCustomerAccountOutput;
+import com.capgemini.assesment.service.model.output.account.GetAccountOutput;
 import com.capgemini.assesment.service.model.output.account.GetAccountTransactionOutput;
 import com.capgemini.assesment.service.model.output.account.TransactionOutput;
 import ma.glasnost.orika.MapperFacade;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.ConstraintViolationException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -59,27 +61,41 @@ public class AccountServiceImpl implements AccountService {
         logger.debug("addAccount method start", tracer.getCurrentSpan().getTraceId());
         Optional.ofNullable(customerRepository.findOne(addCustomerAccountInput.getOwnerId())).orElseThrow(() -> new CustomerNotFound());
         Account account = mapperFacade.map(addCustomerAccountInput, Account.class);
-        if(addCustomerAccountInput.getAmount() <0){
+        if(addCustomerAccountInput.getAmount() < 0){
             throw new InsufficientBalance();
         }
         account = accountRepository.save(account);
-        TransactionInput transactionInput = TransactionInput.builder().amount(addCustomerAccountInput.getAmount()).accountId(account.getId()).build();
-        transactionService.doTransaction(transactionInput);
+        if(addCustomerAccountInput.getAmount() > 0 ){
+            TransactionInput transactionInput = TransactionInput.builder().amount(addCustomerAccountInput.getAmount()).accountId(account.getId()).build();
+            transactionService.doTransaction(transactionInput);
+
+        }
         AddCustomerAccountOutput addCustomerAccountOutput = mapperFacade.map(account, AddCustomerAccountOutput.class);
         logger.debug("addAccount method finish", tracer.getCurrentSpan().getTraceId());
         return addCustomerAccountOutput;
     }
 
 
+    @Transactional
     @Override
     public GetAccountTransactionOutput getAccountTransactions(long accountId) throws AccountNotFound {
         logger.debug("getAccountTransactions method start", tracer.getCurrentSpan().getTraceId());
-        Optional<Account> account = Optional.ofNullable(accountRepository.findOne(accountId));
-        account.orElseThrow(() -> new AccountNotFound());
-        GetAccountTransactionOutput getAccountTransactionOutput = mapperFacade.map(account.get(), GetAccountTransactionOutput.class);
-        getAccountTransactionOutput.setTransactionOutputs(account.get().getTransactions().stream().map(transaction -> mapperFacade.map(transaction, TransactionOutput.class)).collect(Collectors.toList()));
+
+        Account account = accountRepository.findOne(accountId);
+        if(account == null){
+            throw  new AccountNotFound();
+        }
+        GetAccountTransactionOutput getAccountTransactionOutput = mapperFacade.map(account, GetAccountTransactionOutput.class);
+        getAccountTransactionOutput.setTransactionOutputs(account.getTransactions().stream().map(transaction -> mapperFacade.map(transaction, TransactionOutput.class)).collect(Collectors.toList()));
         logger.debug("getAccountTransactions method finish", tracer.getCurrentSpan().getTraceId());
         return getAccountTransactionOutput;
+    }
+
+    @Override
+    public List<GetAccountOutput> getCustomerAccounts(long customerId) {
+        List<Account> accounts =  accountRepository.findAccountsByCustomer_Id(customerId);
+        List<GetAccountOutput> result = accounts.stream().map(account -> mapperFacade.map(account,GetAccountOutput.class)).collect(Collectors.toList());
+        return result;
     }
 
 }
