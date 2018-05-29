@@ -52,7 +52,6 @@ public class CustomerServiceTest {
 
     @Before
     public void setUp() throws Exception {
-
         when(span.getTraceId()).thenReturn(1l);
         when(tracer.getCurrentSpan()).thenReturn(span);
         Customer customer = Customer.builder().id(2).nationalityId("a").name("name").surname("surname").build();
