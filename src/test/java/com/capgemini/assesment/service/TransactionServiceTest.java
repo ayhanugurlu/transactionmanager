@@ -6,6 +6,7 @@ import com.capgemini.assesment.data.entity.Transaction;
 import com.capgemini.assesment.data.repository.AccountRepository;
 import com.capgemini.assesment.data.repository.CustomerRepository;
 import com.capgemini.assesment.data.repository.TransactionRepository;
+import com.capgemini.assesment.listener.ApplicationStartup;
 import com.capgemini.assesment.service.exception.AccountNotFound;
 import com.capgemini.assesment.service.exception.CustomerAlreadyExist;
 import com.capgemini.assesment.service.exception.CustomerNotFound;
@@ -56,6 +57,9 @@ public class TransactionServiceTest {
     AccountRepository accountRepository;
 
     @MockBean
+    private ApplicationStartup applicationStartup;
+
+    @MockBean
     private Tracer tracer;
 
     @MockBean
@@ -84,19 +88,19 @@ public class TransactionServiceTest {
         try {
             TransactionInput transactionInput = TransactionInput.builder().accountId(2).amount(10).build();
             TransactionResultOutput transactionResultOutput = transactionService.doTransaction(transactionInput);
-        }catch (AccountNotFound accountNotFound){
+        } catch (AccountNotFound accountNotFound) {
 
         }
 
         try {
             TransactionInput transactionInput = TransactionInput.builder().accountId(1).amount(-20).build();
             TransactionResultOutput transactionResultOutput = transactionService.doTransaction(transactionInput);
-        }catch (InsufficientBalance insufficientBalance){
+        } catch (InsufficientBalance insufficientBalance) {
 
         }
         TransactionInput transactionInput = TransactionInput.builder().accountId(1).amount(-5).build();
         TransactionResultOutput transactionResultOutput = transactionService.doTransaction(transactionInput);
-        Assert.assertEquals(transactionResultOutput.getId() , 2);
+        Assert.assertEquals(transactionResultOutput.getId(), 2);
 
     }
 

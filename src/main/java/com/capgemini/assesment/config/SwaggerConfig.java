@@ -5,7 +5,6 @@ package com.capgemini.assesment.config;
  */
 
 
-
 import com.google.common.base.Predicates;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

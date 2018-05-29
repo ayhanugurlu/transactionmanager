@@ -2,6 +2,7 @@ package com.capgemini.assesment.service;
 
 import com.capgemini.assesment.data.entity.Customer;
 import com.capgemini.assesment.data.repository.CustomerRepository;
+import com.capgemini.assesment.listener.ApplicationStartup;
 import com.capgemini.assesment.service.exception.CustomerAlreadyExist;
 import com.capgemini.assesment.service.exception.CustomerNotFound;
 import com.capgemini.assesment.service.model.input.customer.AddCustomerInput;
@@ -32,16 +33,15 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 public class CustomerServiceTest {
 
-    @Autowired
-    private CustomerService customerService;
-
     @Qualifier("accountServiceMapper")
     @Autowired
     MapperFacade mapperFacade;
-
     @MockBean
     CustomerRepository customerRepository;
-
+    @Autowired
+    private CustomerService customerService;
+    @MockBean
+    private ApplicationStartup applicationStartup;
 
     @MockBean
     private Tracer tracer;
@@ -68,7 +68,7 @@ public class CustomerServiceTest {
 
         try {
             GetCustomerOutput getCustomerOutput = customerService.getCustomer(3);
-        }catch (CustomerNotFound customerNotFound){
+        } catch (CustomerNotFound customerNotFound) {
 
         }
         GetCustomerOutput getCustomerOutput = customerService.getCustomer(2);
@@ -83,7 +83,7 @@ public class CustomerServiceTest {
 
         try {
             GetCustomerOutput getCustomerOutput = customerService.getCustomerByNationalityId("c");
-        }catch (CustomerNotFound customerNotFound){
+        } catch (CustomerNotFound customerNotFound) {
 
         }
         GetCustomerOutput getCustomerOutput = customerService.getCustomerByNationalityId("a");
@@ -99,7 +99,7 @@ public class CustomerServiceTest {
         AddCustomerInput addCustomerInput = AddCustomerInput.builder().name("name").surname("surname").nationalityId("a").build();
         try {
             AddCustomerOutput addCustomerOutput = customerService.addCustomer(addCustomerInput);
-        }catch (CustomerAlreadyExist customerAlreadyExist){
+        } catch (CustomerAlreadyExist customerAlreadyExist) {
 
         }
         addCustomerInput = AddCustomerInput.builder().name("name").surname("surname").nationalityId("c").build();

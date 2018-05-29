@@ -2,16 +2,15 @@ package com.capgemini.assesment.service;
 
 import com.capgemini.assesment.data.entity.Account;
 import com.capgemini.assesment.data.entity.Customer;
-import com.capgemini.assesment.data.entity.Transaction;
 import com.capgemini.assesment.data.repository.AccountRepository;
 import com.capgemini.assesment.data.repository.CustomerRepository;
+import com.capgemini.assesment.listener.ApplicationStartup;
 import com.capgemini.assesment.service.exception.AccountNotFound;
 import com.capgemini.assesment.service.exception.CustomerNotFound;
 import com.capgemini.assesment.service.exception.InsufficientBalance;
 import com.capgemini.assesment.service.model.input.account.AddCustomerAccountInput;
 import com.capgemini.assesment.service.model.input.transaction.TransactionInput;
 import com.capgemini.assesment.service.model.output.account.AddCustomerAccountOutput;
-import com.capgemini.assesment.service.model.output.account.TransactionOutput;
 import com.capgemini.assesment.service.model.output.transaction.TransactionResultOutput;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Assert;
@@ -22,13 +21,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.cloud.sleuth.Span;
+import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
-
-import org.springframework.cloud.sleuth.Span;
-import org.springframework.cloud.sleuth.Tracer;
 
 
 /**
@@ -37,21 +35,19 @@ import org.springframework.cloud.sleuth.Tracer;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AccountServiceTest {
-    @Autowired
-    private AccountService accountService;
-
     @Qualifier("accountServiceMapper")
     @Autowired
     MapperFacade mapperFacade;
-
     @MockBean
     AccountRepository accountRepository;
-
     @MockBean
     CustomerRepository customerRepository;
-
     @MockBean
     TransactionService transactionService;
+    @Autowired
+    private AccountService accountService;
+    @MockBean
+    private ApplicationStartup applicationStartup;
 
     @MockBean
     private Tracer tracer;
@@ -81,7 +77,7 @@ public class AccountServiceTest {
         addCustomerAccountInput = AddCustomerAccountInput.builder().amount(-10).ownerId(1).currencyType("TRY").build();
         try {
             addCustomerAccountOutput = accountService.addAccount(addCustomerAccountInput);
-        }catch (InsufficientBalance insufficientBalance){
+        } catch (InsufficientBalance insufficientBalance) {
 
         }
 

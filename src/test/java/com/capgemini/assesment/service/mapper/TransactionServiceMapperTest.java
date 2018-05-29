@@ -1,6 +1,6 @@
 package com.capgemini.assesment.service.mapper;
 
-import com.capgemini.assesment.TransactionmanagerApplication;
+import com.capgemini.assesment.TransactionManagerApplication;
 import com.capgemini.assesment.data.entity.Account;
 import com.capgemini.assesment.data.entity.Transaction;
 import com.capgemini.assesment.service.model.input.transaction.TransactionInput;
@@ -20,7 +20,7 @@ import java.util.Date;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration(classes = TransactionmanagerApplication.class)
+@ContextConfiguration(classes = TransactionManagerApplication.class)
 public class TransactionServiceMapperTest {
 
 

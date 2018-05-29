@@ -15,6 +15,8 @@ import java.util.List;
  */
 public interface AccountService {
     AddCustomerAccountOutput addAccount(AddCustomerAccountInput addCustomerAccountInput) throws CustomerNotFound, AccountNotFound, InsufficientBalance;
+
     GetAccountTransactionOutput getAccountTransactions(long accountId) throws AccountNotFound;
+
     List<GetAccountOutput> getCustomerAccounts(long customerId);
 }

@@ -11,6 +11,7 @@ import com.capgemini.assesment.web.rest.response.customer.AddCustomerResponse;
 import com.capgemini.assesment.web.rest.response.customer.GetCustomerResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +23,9 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by ayhanugurlu on 5/26/18.
  */
+@Slf4j
 @RestController
 public class CustomerRest {
-
-    private static Logger logger = LoggerFactory.getLogger(CustomerRest.class);
 
     @Autowired
     @Qualifier("customerRestMapper")
@@ -42,10 +42,10 @@ public class CustomerRest {
             notes = "Find customer use by natioanlity id and return it.<br/>")
     @GetMapping("getCustomer/{id}")
     public GetCustomerResponse getCustomer(@ApiParam(value = "nationality id")@PathVariable(name = "id") String nationalityId) throws CustomerNotFound {
-        logger.debug("getCustomer method start", tracer.getCurrentSpan().getTraceId());
+        log.debug("getCustomer method start", tracer.getCurrentSpan().getTraceId());
         GetCustomerOutput getCustomerOutput = customerService.getCustomerByNationalityId(nationalityId);
         GetCustomerResponse getCustomerResponse = mapperFacade.map(getCustomerOutput,GetCustomerResponse.class);
-        logger.debug("getCustomer method finish", tracer.getCurrentSpan().getTraceId());
+        log.debug("getCustomer method finish", tracer.getCurrentSpan().getTraceId());
         return getCustomerResponse;
     }
 
@@ -53,11 +53,11 @@ public class CustomerRest {
             notes = "add customer if it is not exist.<br/>")
     @PostMapping("addCustomer")
     public @ResponseBody AddCustomerResponse addCustomer(@ApiParam(value = "nationality id, name and surname") @RequestBody AddCustomerRequest addCustomerRequest) throws CustomerAlreadyExist {
-        logger.debug("addCustomer method start", tracer.getCurrentSpan().getTraceId());
+        log.debug("addCustomer method start", tracer.getCurrentSpan().getTraceId());
         AddCustomerInput input = mapperFacade.map(addCustomerRequest, AddCustomerInput.class);
         AddCustomerOutput output = customerService.addCustomer(input);
         AddCustomerResponse customerResponse = mapperFacade.map(output,AddCustomerResponse.class);
-        logger.debug("addCustomer method finis", tracer.getCurrentSpan().getTraceId());
+        log.debug("addCustomer method finis", tracer.getCurrentSpan().getTraceId());
 
         return customerResponse;
     }

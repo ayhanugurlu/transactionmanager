@@ -15,7 +15,10 @@ import java.util.List;
 public interface CustomerService {
 
     List<GetCustomerOutput> getAllCustomer();
+
     GetCustomerOutput getCustomer(long id) throws CustomerNotFound;
+
     GetCustomerOutput getCustomerByNationalityId(String nationalityId) throws CustomerNotFound;
+
     AddCustomerOutput addCustomer(AddCustomerInput addCustomerInput) throws CustomerAlreadyExist;
 }

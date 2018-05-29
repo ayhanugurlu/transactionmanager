@@ -9,6 +9,7 @@ import com.capgemini.assesment.web.rest.request.transaction.TransactionRequest;
 import com.capgemini.assesment.web.rest.response.transaction.TransactionResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Created by ayhanugurlu on 5/28/18.
  */
+@Slf4j
 @RestController
 public class TransactionRest {
-
-    private static Logger logger = LoggerFactory.getLogger(TransactionRest.class);
 
 
     @Autowired
@@ -42,11 +42,11 @@ public class TransactionRest {
             notes = "if account is avaliable fo transaction .<br/>")
     @PostMapping("doTransaction")
     public TransactionResponse doTransaction(@ApiParam(value = "account id and amount") @RequestBody TransactionRequest transactionRequest) throws AccountNotFound, InsufficientBalance {
-        logger.debug("doTransaction method start", tracer.getCurrentSpan().getTraceId());
+        log.debug("doTransaction method start", tracer.getCurrentSpan().getTraceId());
         TransactionInput transactionInput = mapperFacade.map(transactionRequest, TransactionInput.class);
         TransactionResultOutput output = transactionService.doTransaction(transactionInput);
         TransactionResponse transactionResponse = mapperFacade.map(output, TransactionResponse.class);
-        logger.debug("doTransaction method finish", tracer.getCurrentSpan().getTraceId());
+        log.debug("doTransaction method finish", tracer.getCurrentSpan().getTraceId());
         return transactionResponse;
 
     }

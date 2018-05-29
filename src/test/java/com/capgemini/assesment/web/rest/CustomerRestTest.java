@@ -1,38 +1,25 @@
 package com.capgemini.assesment.web.rest;
 
-import com.capgemini.assesment.TransactionmanagerApplication;
-import com.capgemini.assesment.service.CustomerService;
-import com.capgemini.assesment.web.rest.request.account.AddCustomerAccountRequest;
+import com.capgemini.assesment.TransactionManagerApplication;
 import com.capgemini.assesment.web.rest.request.customer.AddCustomerRequest;
 import com.capgemini.assesment.web.rest.response.customer.AddCustomerResponse;
 import com.capgemini.assesment.web.rest.response.customer.GetCustomerResponse;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import ma.glasnost.orika.MapperFacade;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.embedded.LocalServerPort;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Created by ayhanugurlu on 5/28/18.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = TransactionmanagerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = TransactionManagerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class CustomerRestTest {
 
     TestRestTemplate restTemplate = new TestRestTemplate();
