@@ -50,7 +50,7 @@ public class AccountRest {
             notes = "add account for customer<br/>")
     @PostMapping("addAccount")
     public @ResponseBody
-    AddCustomerAccountResponse addAccount(@ApiParam(value = "owner id, currency type, amount") @RequestBody AddCustomerAccountRequest addCustomerAccountRequest) throws CustomerAlreadyExist, CustomerNotFound {
+    AddCustomerAccountResponse addAccount(@ApiParam(value = "owner id, currency type, amount") @RequestBody AddCustomerAccountRequest addCustomerAccountRequest) throws CustomerNotFound {
         logger.debug("addAccount method start", tracer.getCurrentSpan().getTraceId());
         AddCustomerAccountInput input = mapperFacade.map(addCustomerAccountRequest, AddCustomerAccountInput.class);
         AddCustomerAccountOutput output = accountService.addAccount(input);
@@ -64,7 +64,7 @@ public class AccountRest {
             notes = "get account transactions<br/>")
     @GetMapping("getAccountTransactions/{id}")
     public @ResponseBody
-    GetAccountTransactionResponse getAccountTransactions(@ApiParam(value = "Account id")@RequestParam(name = "id") long accountId) throws AccountNotFound {
+    GetAccountTransactionResponse getAccountTransactions(@ApiParam(value = "Account id")@PathVariable(name = "id") long accountId) throws AccountNotFound {
         logger.debug("getAccountTransactions method start", tracer.getCurrentSpan().getTraceId());
         GetAccountTransactionOutput output = accountService.getAccountTransactions(accountId);
         GetAccountTransactionResponse getAccountTransactionOutput = mapperFacade.map(output, GetAccountTransactionResponse.class);

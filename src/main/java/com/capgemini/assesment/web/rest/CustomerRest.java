@@ -41,7 +41,7 @@ public class CustomerRest {
     @ApiOperation(value = "get customer ",
             notes = "Find customer use by natioanlity id and return it.<br/>")
     @GetMapping("getCustomer/{id}")
-    public GetCustomerResponse getCustomer(@ApiParam(value = "nationality id")@RequestParam(name = "id") String nationalityId) throws CustomerNotFound {
+    public GetCustomerResponse getCustomer(@ApiParam(value = "nationality id")@PathVariable(name = "id") String nationalityId) throws CustomerNotFound {
         logger.debug("getCustomer method start", tracer.getCurrentSpan().getTraceId());
         GetCustomerOutput getCustomerOutput = customerService.getCustomerByNationalityId(nationalityId);
         GetCustomerResponse getCustomerResponse = mapperFacade.map(getCustomerOutput,GetCustomerResponse.class);

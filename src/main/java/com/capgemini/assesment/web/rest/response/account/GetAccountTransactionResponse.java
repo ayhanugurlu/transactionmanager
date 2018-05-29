@@ -1,8 +1,6 @@
 package com.capgemini.assesment.web.rest.response.account;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,6 +10,8 @@ import java.util.List;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 public class GetAccountTransactionResponse {
     private String name;
     private String surname;

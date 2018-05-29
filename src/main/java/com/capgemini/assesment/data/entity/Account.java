@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by ayhanugurlu on 5/26/18.
@@ -21,8 +22,8 @@ public class Account {
     private long id;
     @ManyToOne(fetch=FetchType.EAGER)
     private Customer customer;
-    @OneToMany(fetch=FetchType.LAZY)
-    private List<Transaction> transactions;
+    @OneToMany(fetch=FetchType.LAZY, mappedBy = "account")
+    private Set<Transaction> transactions;
     private String currencyType;
     private long balance;
 

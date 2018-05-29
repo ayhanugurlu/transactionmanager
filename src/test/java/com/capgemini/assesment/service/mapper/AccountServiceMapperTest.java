@@ -19,9 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Ayhan.Ugurlu on 28/05/2018
@@ -49,7 +47,7 @@ public class AccountServiceMapperTest {
     public void shouldMapAddCustomerAccountToAddCustomerAccountOutput() {
 
         Customer customer = Customer.builder().id(1).nationalityId("a").name("name").surname("surname").build();
-        List<Transaction> transactions = new ArrayList<>();
+        Set<Transaction> transactions = new HashSet<>();
         Account account = Account.builder().id(1).customer(customer).transactions(transactions).currencyType("TRY").balance(10).build();
         transactions.add(Transaction.builder().id(11).account(account).amount(101).transactionDate(new Date()).build());
         transactions.add(Transaction.builder().id(12).account(account).amount(101).transactionDate(new Date()).build());
@@ -63,7 +61,7 @@ public class AccountServiceMapperTest {
     @Test
     public void shouldMapAccountToGetAccountTransactionOutput() {
         Customer customer = Customer.builder().id(1).nationalityId("a").name("name").surname("surname").build();
-        List<Transaction> transactions = new ArrayList<>();
+        Set<Transaction> transactions = new HashSet<>();
         Account account = Account.builder().id(1).customer(customer).transactions(transactions).currencyType("TRY").balance(10).build();
         transactions.add(Transaction.builder().id(11).account(account).amount(101).transactionDate(new Date()).build());
         transactions.add(Transaction.builder().id(12).account(account).amount(101).transactionDate(new Date()).build());
@@ -77,7 +75,7 @@ public class AccountServiceMapperTest {
     @Test
     public void shouldMapTransactionToTransactionOutput() {
         Customer customer = Customer.builder().id(1).nationalityId("a").name("name").surname("surname").build();
-        List<Transaction> transactions = new ArrayList<>();
+        Set<Transaction> transactions = new HashSet<>();
         Account account = Account.builder().id(1).customer(customer).transactions(transactions).currencyType("TRY").balance(10).build();
         transactions.add(Transaction.builder().id(11).account(account).amount(101).transactionDate(new Date()).build());
         Transaction transaction = Transaction.builder().id(12).account(account).amount(101).transactionDate(new Date()).build();

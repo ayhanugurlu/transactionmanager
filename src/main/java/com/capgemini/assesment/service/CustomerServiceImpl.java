@@ -56,7 +56,6 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public AddCustomerOutput addCustomer(AddCustomerInput addCustomerInput) throws CustomerAlreadyExist {
-
         logger.debug("addCustomer method start", tracer.getCurrentSpan().getTraceId());
         Optional<Customer> customer = repository.findByNationalityId(addCustomerInput.getNationalityId());
         if(customer.isPresent()){

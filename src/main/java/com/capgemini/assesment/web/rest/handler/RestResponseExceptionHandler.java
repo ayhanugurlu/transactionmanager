@@ -1,7 +1,9 @@
 package com.capgemini.assesment.web.rest.handler;
 
+import com.capgemini.assesment.service.exception.AccountNotFound;
 import com.capgemini.assesment.service.exception.CustomerAlreadyExist;
 import com.capgemini.assesment.service.exception.CustomerNotFound;
+import com.capgemini.assesment.service.exception.InsufficientBalance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.sleuth.Tracer;
@@ -45,7 +47,7 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
 
 
     @ExceptionHandler(CustomerNotFound.class)
-    public ResponseEntity<ErrResponse> handleValidationException(HttpServletRequest request, CustomerNotFound e) {
+    public ResponseEntity<ErrResponse> handleCustomerNotFound(HttpServletRequest request, CustomerNotFound e) {
 
         String errorMessage = e.getErrors().stream().collect(Collectors.joining(", "));
         String[] eCodes = {e.getErrorCode()};
@@ -58,6 +60,37 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
                 .status(HttpStatus.NOT_FOUND)
                 .header(errorCodeHeaderKey, eCodes)
                 .body(response);
+    }
 
+
+    @ExceptionHandler(AccountNotFound.class)
+    public ResponseEntity<ErrResponse> handleAccountNotFound(HttpServletRequest request, AccountNotFound e) {
+
+        String errorMessage = e.getErrors().stream().collect(Collectors.joining(", "));
+        String[] eCodes = {e.getErrorCode()};
+
+        logger.error(errorMessage);
+        ErrResponse response = new ErrResponse(tracer.getCurrentSpan().getTraceId(), errorMessage);
+
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .header(errorCodeHeaderKey, eCodes)
+                .body(response);
+    }
+
+
+    @ExceptionHandler(InsufficientBalance.class)
+    public ResponseEntity<ErrResponse> handleInsufficientBalance(HttpServletRequest request, InsufficientBalance e) {
+
+        String errorMessage = e.getErrors().stream().collect(Collectors.joining(", "));
+        String[] eCodes = {e.getErrorCode()};
+
+        logger.error(errorMessage);
+        ErrResponse response = new ErrResponse(tracer.getCurrentSpan().getTraceId(), errorMessage);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .header(errorCodeHeaderKey, eCodes)
+                .body(response);
     }
 }

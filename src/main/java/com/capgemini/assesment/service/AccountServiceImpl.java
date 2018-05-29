@@ -64,7 +64,6 @@ public class AccountServiceImpl implements AccountService {
         Optional<Account> account = Optional.ofNullable(accountRepository.findOne(accountId));
         account.orElseThrow(() -> new AccountNotFound());
         GetAccountTransactionOutput getAccountTransactionOutput = mapperFacade.map(account.get(), GetAccountTransactionOutput.class);
-        account.get().getTransactions().size();
         getAccountTransactionOutput.setTransactionOutputs(account.get().getTransactions().stream().map(transaction -> mapperFacade.map(transaction, TransactionOutput.class)).collect(Collectors.toList()));
         logger.debug("getAccountTransactions method finish", tracer.getCurrentSpan().getTraceId());
         return getAccountTransactionOutput;
