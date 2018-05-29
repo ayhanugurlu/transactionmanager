@@ -1,6 +1,5 @@
 package com.capgemini.assesment.web.vaadin;
 
-import com.capgemini.assesment.data.entity.Transaction;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
