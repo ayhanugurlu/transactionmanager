@@ -1,5 +1,7 @@
 package com.capgemini.assesment.service.exception;
 
+import org.springframework.http.HttpStatus;
+
 import static com.capgemini.assesment.service.exception.ErrorCode.INSUFFICENT_BALANCE;
 
 /**
@@ -13,5 +15,10 @@ public class InsufficientBalance extends TemplateException {
     @Override
     public String getErrorCode() {
         return INSUFFICENT_BALANCE;
+    }
+
+    @Override
+    public HttpStatus getHttpStatus() {
+        return HttpStatus.BAD_REQUEST;
     }
 }

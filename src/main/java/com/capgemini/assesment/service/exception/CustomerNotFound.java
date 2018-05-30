@@ -1,5 +1,7 @@
 package com.capgemini.assesment.service.exception;
 
+import org.springframework.http.HttpStatus;
+
 import static com.capgemini.assesment.service.exception.ErrorCode.CUSTOMER_NOT_FOUND;
 
 /**
@@ -14,5 +16,10 @@ public class CustomerNotFound extends TemplateException {
     @Override
     public String getErrorCode() {
         return CUSTOMER_NOT_FOUND;
+    }
+
+    @Override
+    public HttpStatus getHttpStatus() {
+        return HttpStatus.NOT_FOUND;
     }
 }

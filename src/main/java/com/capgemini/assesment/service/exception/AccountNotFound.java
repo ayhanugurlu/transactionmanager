@@ -1,5 +1,7 @@
 package com.capgemini.assesment.service.exception;
 
+import org.springframework.http.HttpStatus;
+
 import static com.capgemini.assesment.service.exception.ErrorCode.ACCOUNT_NOT_FOUND;
 
 /**
@@ -14,5 +16,10 @@ public class AccountNotFound extends TemplateException {
     @Override
     public String getErrorCode() {
         return ACCOUNT_NOT_FOUND;
+    }
+
+    @Override
+    public HttpStatus getHttpStatus() {
+        return HttpStatus.NOT_FOUND;
     }
 }
