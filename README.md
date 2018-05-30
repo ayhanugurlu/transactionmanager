@@ -4,4 +4,4 @@
 
 https://ayhan-transactionmanager.herokuapp.com/swagger-ui.html
 
-https://ayhan-transactionmanager.herokuapp.com/TransactionView.this.getAccountOutput
+https://ayhan-transactionmanager.herokuapp.com/assesment
