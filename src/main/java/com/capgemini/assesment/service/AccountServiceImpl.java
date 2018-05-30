@@ -69,7 +69,6 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public GetAccountTransactionOutput getAccountTransactions(long accountId) throws AccountNotFound {
         log.debug("getAccountTransactions method start", tracer.getCurrentSpan().getTraceId());
-
         Account account = accountRepository.findOne(accountId);
         if (account == null) {
             throw new AccountNotFound();

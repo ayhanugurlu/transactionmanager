@@ -2,6 +2,7 @@ package com.capgemini.assesment.service;
 
 import com.capgemini.assesment.data.entity.Account;
 import com.capgemini.assesment.data.entity.Customer;
+import com.capgemini.assesment.data.entity.Transaction;
 import com.capgemini.assesment.data.repository.AccountRepository;
 import com.capgemini.assesment.data.repository.CustomerRepository;
 import com.capgemini.assesment.listener.ApplicationStartup;
@@ -11,6 +12,8 @@ import com.capgemini.assesment.service.exception.InsufficientBalance;
 import com.capgemini.assesment.service.model.input.account.AddCustomerAccountInput;
 import com.capgemini.assesment.service.model.input.transaction.TransactionInput;
 import com.capgemini.assesment.service.model.output.account.AddCustomerAccountOutput;
+import com.capgemini.assesment.service.model.output.account.GetAccountOutput;
+import com.capgemini.assesment.service.model.output.account.GetAccountTransactionOutput;
 import com.capgemini.assesment.service.model.output.transaction.TransactionResultOutput;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Assert;
@@ -24,6 +27,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cloud.sleuth.Span;
 import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.*;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
@@ -62,13 +67,22 @@ public class AccountServiceTest {
         when(tracer.getCurrentSpan()).thenReturn(span);
         Customer customer = Customer.builder().id(2).nationalityId("a").name("name").surname("surname").build();
         Account account = Account.builder().id(1).customer(customer).currencyType("TRY").balance(10).build();
+        Transaction transaction = Transaction.builder().transactionDate(new Date()).account(account).amount(10).build();
+        Set<Transaction> transactions = new HashSet<>();
+        transactions.add(transaction);
+        account.setTransactions(transactions);
         when(customerRepository.findOne(any(Long.class))).thenReturn(customer);
         when(accountRepository.save(any(Account.class))).thenReturn(account);
+        when(accountRepository.findOne(1l)).thenReturn(null);
+        when(accountRepository.findOne(2l)).thenReturn(account);
+        List<Account> accounts = new ArrayList<>();
+        accounts.add(account);
+        when(accountRepository.findAccountsByCustomer_Id(any(Long.class))).thenReturn(accounts);
         when(transactionService.doTransaction(any(TransactionInput.class))).thenReturn(transactionResultOutput);
     }
 
     @Test
-    public void addAccountTest() throws CustomerNotFound, AccountNotFound, InsufficientBalance {
+    public void accountServiceTest() throws CustomerNotFound, AccountNotFound, InsufficientBalance {
         AddCustomerAccountInput addCustomerAccountInput = AddCustomerAccountInput.builder().amount(10).ownerId(1).currencyType("TRY").build();
         AddCustomerAccountOutput addCustomerAccountOutput = accountService.addAccount(addCustomerAccountInput);
         Assert.assertEquals(addCustomerAccountOutput.getId(), 1l);
@@ -80,6 +94,17 @@ public class AccountServiceTest {
         } catch (InsufficientBalance insufficientBalance) {
 
         }
+
+        List<GetAccountOutput> getAccountOutputs = accountService.getCustomerAccounts(1);
+        Assert.assertEquals(getAccountOutputs.size(), 1);
+
+        try {
+            GetAccountTransactionOutput getAccountTransactionOutput = accountService.getAccountTransactions(1);
+        } catch (AccountNotFound accountNotFound) {
+
+        }
+        GetAccountTransactionOutput getAccountTransactionOutput = accountService.getAccountTransactions(2);
+        Assert.assertEquals(getAccountTransactionOutput.getTransactionOutputs().size(), 1);
 
     }
 }

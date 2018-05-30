@@ -21,6 +21,8 @@ import org.springframework.cloud.sleuth.Span;
 import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Matchers.any;
@@ -60,6 +62,9 @@ public class CustomerServiceTest {
         when(customerRepository.findByNationalityId("a")).thenReturn(Optional.of(customer));
         when(customerRepository.save(any(Customer.class))).thenReturn(customer);
         when(customerRepository.findByNationalityId("c")).thenReturn(Optional.empty());
+        List<Customer> customers = new ArrayList<>();
+        customers.add(customer);
+        when(customerRepository.findAll()).thenReturn(customers);
     }
 
 
@@ -109,6 +114,14 @@ public class CustomerServiceTest {
         Assert.assertEquals(addCustomerOutput.getSurname(), "surname");
         Assert.assertEquals(addCustomerOutput.getNationalityId(), "a");
 
+
+
+    }
+
+    @Test
+    public void getAllCustomerTest() {
+        List<GetCustomerOutput>  customerOutputs = customerService.getAllCustomer();
+        Assert.assertEquals(customerOutputs.size(), 1);
     }
 
 }
