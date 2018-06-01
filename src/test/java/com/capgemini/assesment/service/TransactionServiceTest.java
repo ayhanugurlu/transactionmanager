@@ -7,10 +7,7 @@ import com.capgemini.assesment.data.repository.AccountRepository;
 import com.capgemini.assesment.data.repository.CustomerRepository;
 import com.capgemini.assesment.data.repository.TransactionRepository;
 import com.capgemini.assesment.listener.ApplicationStartup;
-import com.capgemini.assesment.service.exception.AccountNotFound;
-import com.capgemini.assesment.service.exception.CustomerAlreadyExist;
-import com.capgemini.assesment.service.exception.CustomerNotFound;
-import com.capgemini.assesment.service.exception.InsufficientBalance;
+import com.capgemini.assesment.service.exception.*;
 import com.capgemini.assesment.service.model.input.customer.AddCustomerInput;
 import com.capgemini.assesment.service.model.input.transaction.TransactionInput;
 import com.capgemini.assesment.service.model.output.customer.AddCustomerOutput;
@@ -89,14 +86,14 @@ public class TransactionServiceTest {
             TransactionInput transactionInput = TransactionInput.builder().accountId(2).amount(10).build();
             TransactionResultOutput transactionResultOutput = transactionService.doTransaction(transactionInput);
         } catch (AccountNotFound accountNotFound) {
-
+            Assert.assertEquals(accountNotFound.getErrorCode(),ErrorCode.ACCOUNT_NOT_FOUND);
         }
 
         try {
             TransactionInput transactionInput = TransactionInput.builder().accountId(1).amount(-20).build();
             TransactionResultOutput transactionResultOutput = transactionService.doTransaction(transactionInput);
         } catch (InsufficientBalance insufficientBalance) {
-
+            Assert.assertEquals(insufficientBalance.getErrorCode(),ErrorCode.INSUFFICENT_BALANCE);
         }
         TransactionInput transactionInput = TransactionInput.builder().accountId(1).amount(-5).build();
         TransactionResultOutput transactionResultOutput = transactionService.doTransaction(transactionInput);

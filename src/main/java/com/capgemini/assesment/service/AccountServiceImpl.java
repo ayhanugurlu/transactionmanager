@@ -48,7 +48,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AddCustomerAccountOutput addAccount(AddCustomerAccountInput addCustomerAccountInput) throws CustomerNotFound, AccountNotFound, InsufficientBalance {
         log.debug("addAccount method start", tracer.getCurrentSpan().getTraceId());
-        Optional.ofNullable(customerRepository.findOne(addCustomerAccountInput.getOwnerId())).orElseThrow(() -> new CustomerNotFound());
+        Optional.ofNullable(customerRepository.findOne(addCustomerAccountInput.getOwnerId())).orElseThrow(() -> new CustomerNotFound(addCustomerAccountInput.getOwnerId()));
         Account account = mapperFacade.map(addCustomerAccountInput, Account.class);
         if (addCustomerAccountInput.getAmount() < 0) {
             throw new InsufficientBalance();
@@ -71,7 +71,7 @@ public class AccountServiceImpl implements AccountService {
         log.debug("getAccountTransactions method start", tracer.getCurrentSpan().getTraceId());
         Account account = accountRepository.findOne(accountId);
         if (account == null) {
-            throw new AccountNotFound();
+            throw new AccountNotFound(accountId);
         }
         GetAccountTransactionOutput getAccountTransactionOutput = mapperFacade.map(account, GetAccountTransactionOutput.class);
         getAccountTransactionOutput.setTransactionOutputs(account.getTransactions().stream().map(transaction -> mapperFacade.map(transaction, TransactionOutput.class)).collect(Collectors.toList()));

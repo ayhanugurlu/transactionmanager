@@ -5,6 +5,7 @@ import com.capgemini.assesment.data.repository.CustomerRepository;
 import com.capgemini.assesment.listener.ApplicationStartup;
 import com.capgemini.assesment.service.exception.CustomerAlreadyExist;
 import com.capgemini.assesment.service.exception.CustomerNotFound;
+import com.capgemini.assesment.service.exception.ErrorCode;
 import com.capgemini.assesment.service.model.input.customer.AddCustomerInput;
 import com.capgemini.assesment.service.model.output.customer.AddCustomerOutput;
 import com.capgemini.assesment.service.model.output.customer.GetCustomerOutput;
@@ -74,6 +75,7 @@ public class CustomerServiceTest {
         try {
             GetCustomerOutput getCustomerOutput = customerService.getCustomer(3);
         } catch (CustomerNotFound customerNotFound) {
+            Assert.assertEquals(customerNotFound.getErrorCode(),ErrorCode.CUSTOMER_NOT_FOUND);
 
         }
         GetCustomerOutput getCustomerOutput = customerService.getCustomer(2);
@@ -89,7 +91,7 @@ public class CustomerServiceTest {
         try {
             GetCustomerOutput getCustomerOutput = customerService.getCustomerByNationalityId("c");
         } catch (CustomerNotFound customerNotFound) {
-
+            Assert.assertEquals(customerNotFound.getErrorCode(),ErrorCode.CUSTOMER_NOT_FOUND);
         }
         GetCustomerOutput getCustomerOutput = customerService.getCustomerByNationalityId("a");
         Assert.assertEquals(getCustomerOutput.getId(), 2);
@@ -105,7 +107,7 @@ public class CustomerServiceTest {
         try {
             AddCustomerOutput addCustomerOutput = customerService.addCustomer(addCustomerInput);
         } catch (CustomerAlreadyExist customerAlreadyExist) {
-
+            Assert.assertEquals(customerAlreadyExist.getErrorCode(),ErrorCode.CUSTOMER_ALREADY_EXIST);
         }
         addCustomerInput = AddCustomerInput.builder().name("name").surname("surname").nationalityId("c").build();
         AddCustomerOutput addCustomerOutput = customerService.addCustomer(addCustomerInput);

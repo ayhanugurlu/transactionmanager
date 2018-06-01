@@ -9,10 +9,10 @@ import static com.capgemini.assesment.service.exception.ErrorCode.ACCOUNT_NOT_FO
  */
 public class AccountNotFound extends TemplateException {
 
-
-    public AccountNotFound(){
-        errors.add("Customer Not Found");
+    public AccountNotFound(long accountId) {
+        errors.add(String.format("Account Not Found.Account Id = %d", accountId));
     }
+
     @Override
     public String getErrorCode() {
         return ACCOUNT_NOT_FOUND;

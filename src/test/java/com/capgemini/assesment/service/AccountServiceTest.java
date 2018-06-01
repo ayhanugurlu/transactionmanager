@@ -8,6 +8,7 @@ import com.capgemini.assesment.data.repository.CustomerRepository;
 import com.capgemini.assesment.listener.ApplicationStartup;
 import com.capgemini.assesment.service.exception.AccountNotFound;
 import com.capgemini.assesment.service.exception.CustomerNotFound;
+import com.capgemini.assesment.service.exception.ErrorCode;
 import com.capgemini.assesment.service.exception.InsufficientBalance;
 import com.capgemini.assesment.service.model.input.account.AddCustomerAccountInput;
 import com.capgemini.assesment.service.model.input.transaction.TransactionInput;
@@ -92,7 +93,7 @@ public class AccountServiceTest {
         try {
             addCustomerAccountOutput = accountService.addAccount(addCustomerAccountInput);
         } catch (InsufficientBalance insufficientBalance) {
-
+            Assert.assertEquals(insufficientBalance.getErrorCode(),ErrorCode.INSUFFICENT_BALANCE);
         }
 
         List<GetAccountOutput> getAccountOutputs = accountService.getCustomerAccounts(1);
@@ -101,7 +102,7 @@ public class AccountServiceTest {
         try {
             GetAccountTransactionOutput getAccountTransactionOutput = accountService.getAccountTransactions(1);
         } catch (AccountNotFound accountNotFound) {
-
+            Assert.assertEquals(accountNotFound.getErrorCode(),ErrorCode.ACCOUNT_NOT_FOUND);
         }
         GetAccountTransactionOutput getAccountTransactionOutput = accountService.getAccountTransactions(2);
         Assert.assertEquals(getAccountTransactionOutput.getTransactionOutputs().size(), 1);

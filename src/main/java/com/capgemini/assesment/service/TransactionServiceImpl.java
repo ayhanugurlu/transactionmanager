@@ -41,7 +41,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public TransactionResultOutput doTransaction(TransactionInput transactionInput) throws AccountNotFound, InsufficientBalance {
         Optional<Account> account = Optional.ofNullable(accountRepository.findOne(transactionInput.getAccountId()));
-        account.orElseThrow(() -> new AccountNotFound());
+        account.orElseThrow(() -> new AccountNotFound(transactionInput.getAccountId()));
         long total = account.get().getBalance() + transactionInput.getAmount();
         if (total < 0) {
             throw new InsufficientBalance();

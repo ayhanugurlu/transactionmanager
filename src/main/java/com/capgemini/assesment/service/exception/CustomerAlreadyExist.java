@@ -8,8 +8,8 @@ import  static  com.capgemini.assesment.service.exception.ErrorCode.CUSTOMER_ALR
  */
 public class CustomerAlreadyExist extends TemplateException {
 
-    public CustomerAlreadyExist(){
-        errors.add("Customer Already Exist");
+    public CustomerAlreadyExist(String nationalityId){
+        errors.add( String.format("Customer Already Exist. Nationality Id %d",nationalityId));
     }
     @Override
     public String getErrorCode() {
