@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Created by Ayhan.Ugurlu on 29/05/2018
  */
 @SpringView(name = TransactionView.NAME)
-public class TransactionView  extends VerticalLayout implements View {
+public class TransactionView extends VerticalLayout implements View {
     public static final String NAME = "TransactionView";
 
     @Autowired
@@ -50,12 +50,11 @@ public class TransactionView  extends VerticalLayout implements View {
 
         customerLayout = buildCustomer();
         this.addComponent(customerLayout);
-        this.setComponentAlignment(customerLayout,Alignment.MIDDLE_CENTER);
+        this.setComponentAlignment(customerLayout, Alignment.MIDDLE_CENTER);
     }
 
 
-
-    private VerticalLayout buildCustomer(){
+    private VerticalLayout buildCustomer() {
         VerticalLayout verticalLayout = new VerticalLayout();
         Grid<GetCustomerOutput> customerOutputGrid = new Grid<>();
         customerOutputGrid.setItems(customerService.getAllCustomer());
@@ -87,7 +86,7 @@ public class TransactionView  extends VerticalLayout implements View {
                     customerOutputGrid.setItems(customerService.getAllCustomer());
                     customerOutputGrid.markAsDirty();
                 } catch (CustomerAlreadyExist customerAlreadyExist) {
-                    Notification.show(customerAlreadyExist.getMessage(),Notification.Type.ERROR_MESSAGE);
+                    Notification.show(customerAlreadyExist.getMessage(), Notification.Type.ERROR_MESSAGE);
                 }
             });
             content.setMargin(true);
@@ -100,9 +99,9 @@ public class TransactionView  extends VerticalLayout implements View {
                 accountLayout = buildAccount(getCustomerOutput);
                 TransactionView.this.addComponent(accountLayout);
             });
-            if(!selectionEvent.getFirstSelectedItem().isPresent()){
+            if (!selectionEvent.getFirstSelectedItem().isPresent()) {
                 TransactionView.this.removeComponent(accountLayout);
-                if(transactionLayout != null){
+                if (transactionLayout != null) {
                     TransactionView.this.removeComponent(transactionLayout);
                 }
 
@@ -113,9 +112,7 @@ public class TransactionView  extends VerticalLayout implements View {
     }
 
 
-
-
-    private VerticalLayout buildAccount(GetCustomerOutput getCustomerOutput){
+    private VerticalLayout buildAccount(GetCustomerOutput getCustomerOutput) {
         accountLayout = new VerticalLayout();
         getAccountOutputGrid = new Grid<>();
         getAccountOutputGrid.setItems(accountService.getCustomerAccounts(getCustomerOutput.getId()));
@@ -146,8 +143,8 @@ public class TransactionView  extends VerticalLayout implements View {
                     window.close();
                     getAccountOutputGrid.setItems(accountService.getCustomerAccounts(getCustomerOutput.getId()));
                     getAccountOutputGrid.markAsDirty();
-                } catch (CustomerNotFound  | AccountNotFound | InsufficientBalance e) {
-                    Notification.show(e.getMessage(),Notification.Type.ERROR_MESSAGE);
+                } catch (CustomerNotFound | AccountNotFound | InsufficientBalance e) {
+                    Notification.show(e.getMessage(), Notification.Type.ERROR_MESSAGE);
                 }
             });
             content.setMargin(true);
@@ -160,7 +157,7 @@ public class TransactionView  extends VerticalLayout implements View {
                 transactionLayout = buildTransaction(getAccountOutput);
                 TransactionView.this.addComponent(transactionLayout);
             });
-            if(!selectionEvent.getFirstSelectedItem().isPresent()){
+            if (!selectionEvent.getFirstSelectedItem().isPresent()) {
                 TransactionView.this.removeComponent(transactionLayout);
             }
 
@@ -169,7 +166,7 @@ public class TransactionView  extends VerticalLayout implements View {
     }
 
 
-    private VerticalLayout buildTransaction(GetAccountOutput getAccountOutput){
+    private VerticalLayout buildTransaction(GetAccountOutput getAccountOutput) {
         VerticalLayout verticalLayout = new VerticalLayout();
         Grid<TransactionOutput> transactionGrid = new Grid<>();
         try {
@@ -178,8 +175,8 @@ public class TransactionView  extends VerticalLayout implements View {
             accountNotFound.printStackTrace();
             return null;
         }
-        transactionGrid.addColumn(transactionOutput ->  transactionOutput.getAmount()).setCaption("Amount");
-        transactionGrid.addColumn(transactionOutput ->  transactionOutput.getTransactionDate()).setCaption("Date");
+        transactionGrid.addColumn(transactionOutput -> transactionOutput.getAmount()).setCaption("Amount");
+        transactionGrid.addColumn(transactionOutput -> transactionOutput.getTransactionDate()).setCaption("Date");
         verticalLayout.addComponent(transactionGrid);
         Button addTransaction = new Button("Add Transaction");
         addTransaction.addClickListener(event -> {
@@ -200,8 +197,8 @@ public class TransactionView  extends VerticalLayout implements View {
                     transactionGrid.setItems(accountService.getAccountTransactions(getAccountOutput.getId()).getTransactionOutputs());
                     getAccountOutputGrid.setItems(accountService.getCustomerAccounts(getAccountOutput.getOwnerId()));
                     window.close();
-                } catch ( AccountNotFound | InsufficientBalance e) {
-                    Notification.show(e.getMessage(),Notification.Type.ERROR_MESSAGE);
+                } catch (AccountNotFound | InsufficientBalance e) {
+                    Notification.show(e.getMessage(), Notification.Type.ERROR_MESSAGE);
                 }
             });
             content.setMargin(true);

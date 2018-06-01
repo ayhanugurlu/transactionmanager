@@ -9,9 +9,10 @@ import static com.capgemini.assesment.service.exception.ErrorCode.INSUFFICENT_BA
  */
 public class InsufficientBalance extends TemplateException {
 
-    public InsufficientBalance(){
+    public InsufficientBalance() {
         errors.add("Insufficient Balance");
     }
+
     @Override
     public String getErrorCode() {
         return INSUFFICENT_BALANCE;

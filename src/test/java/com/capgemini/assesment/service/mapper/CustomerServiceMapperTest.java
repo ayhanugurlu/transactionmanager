@@ -35,7 +35,6 @@ public class CustomerServiceMapperTest {
     }
 
 
-
     @Test
     public void shouldMapCustomerToGetCustomerOutput() {
         Customer customer = Customer.builder().id(1).nationalityId("a").name("name").surname("surname").build();

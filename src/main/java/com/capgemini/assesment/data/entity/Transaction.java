@@ -19,7 +19,7 @@ public class Transaction {
     @Id
     @GeneratedValue
     private long id;
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
     private long amount;
     private Date transactionDate;

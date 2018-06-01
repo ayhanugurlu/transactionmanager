@@ -29,7 +29,7 @@ public class TransactionServiceMapperTest {
 
     @Test
     public void shouldMapTransactionInputToTransaction() {
-        TransactionInput transactionInput =  TransactionInput.builder().accountId(1).amount(10).build();
+        TransactionInput transactionInput = TransactionInput.builder().accountId(1).amount(10).build();
         Transaction transaction = transactionServiceMapper.map(transactionInput, Transaction.class);
         Assert.assertEquals(transaction.getAmount(), transactionInput.getAmount());
         Assert.assertEquals(transaction.getAccount().getId(), transactionInput.getAccountId());

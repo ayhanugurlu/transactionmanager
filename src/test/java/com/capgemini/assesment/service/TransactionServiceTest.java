@@ -4,14 +4,12 @@ import com.capgemini.assesment.data.entity.Account;
 import com.capgemini.assesment.data.entity.Customer;
 import com.capgemini.assesment.data.entity.Transaction;
 import com.capgemini.assesment.data.repository.AccountRepository;
-import com.capgemini.assesment.data.repository.CustomerRepository;
 import com.capgemini.assesment.data.repository.TransactionRepository;
 import com.capgemini.assesment.listener.ApplicationStartup;
-import com.capgemini.assesment.service.exception.*;
-import com.capgemini.assesment.service.model.input.customer.AddCustomerInput;
+import com.capgemini.assesment.service.exception.AccountNotFound;
+import com.capgemini.assesment.service.exception.ErrorCode;
+import com.capgemini.assesment.service.exception.InsufficientBalance;
 import com.capgemini.assesment.service.model.input.transaction.TransactionInput;
-import com.capgemini.assesment.service.model.output.customer.AddCustomerOutput;
-import com.capgemini.assesment.service.model.output.customer.GetCustomerOutput;
 import com.capgemini.assesment.service.model.output.transaction.TransactionResultOutput;
 import ma.glasnost.orika.MapperFacade;
 import org.junit.Assert;
@@ -27,7 +25,6 @@ import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
-import java.util.Optional;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
@@ -40,19 +37,15 @@ import static org.mockito.Mockito.when;
 public class TransactionServiceTest {
 
 
-    @Autowired
-    private TransactionService transactionService;
-
     @Qualifier("transactionServiceMapper")
     @Autowired
     MapperFacade mapperFacade;
-
     @MockBean
     TransactionRepository transactionRepository;
-
     @MockBean
     AccountRepository accountRepository;
-
+    @Autowired
+    private TransactionService transactionService;
     @MockBean
     private ApplicationStartup applicationStartup;
 
@@ -86,14 +79,14 @@ public class TransactionServiceTest {
             TransactionInput transactionInput = TransactionInput.builder().accountId(2).amount(10).build();
             TransactionResultOutput transactionResultOutput = transactionService.doTransaction(transactionInput);
         } catch (AccountNotFound accountNotFound) {
-            Assert.assertEquals(accountNotFound.getErrorCode(),ErrorCode.ACCOUNT_NOT_FOUND);
+            Assert.assertEquals(accountNotFound.getErrorCode(), ErrorCode.ACCOUNT_NOT_FOUND);
         }
 
         try {
             TransactionInput transactionInput = TransactionInput.builder().accountId(1).amount(-20).build();
             TransactionResultOutput transactionResultOutput = transactionService.doTransaction(transactionInput);
         } catch (InsufficientBalance insufficientBalance) {
-            Assert.assertEquals(insufficientBalance.getErrorCode(),ErrorCode.INSUFFICENT_BALANCE);
+            Assert.assertEquals(insufficientBalance.getErrorCode(), ErrorCode.INSUFFICENT_BALANCE);
         }
         TransactionInput transactionInput = TransactionInput.builder().accountId(1).amount(-5).build();
         TransactionResultOutput transactionResultOutput = transactionService.doTransaction(transactionInput);

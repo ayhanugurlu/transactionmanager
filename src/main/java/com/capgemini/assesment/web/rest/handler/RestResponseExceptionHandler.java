@@ -4,7 +4,6 @@ import com.capgemini.assesment.service.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.sleuth.Tracer;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,8 +25,7 @@ public class RestResponseExceptionHandler extends ResponseEntityExceptionHandler
     private Tracer tracer;
 
 
-
-    @ExceptionHandler({AccountNotFound.class,CustomerNotFound.class,CustomerAlreadyExist.class,InsufficientBalance.class})
+    @ExceptionHandler({AccountNotFound.class, CustomerNotFound.class, CustomerAlreadyExist.class, InsufficientBalance.class})
     public ResponseEntity<ErrResponse> handleTemplateException(HttpServletRequest request, TemplateException e) {
 
         String errorMessage = e.getErrors().stream().collect(Collectors.joining(", "));

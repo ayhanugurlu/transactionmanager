@@ -17,15 +17,15 @@ public class CustomerServiceMapper extends ConfigurableMapper {
 
     protected void configure(MapperFactory factory) {
 
-        factory.classMap (AddCustomerInput.class, Customer.class)
+        factory.classMap(AddCustomerInput.class, Customer.class)
                 .byDefault()
                 .register();
 
-        factory.classMap (Customer.class, GetCustomerOutput.class)
+        factory.classMap(Customer.class, GetCustomerOutput.class)
                 .byDefault()
                 .register();
 
-        factory.classMap (Customer.class, AddCustomerOutput.class)
+        factory.classMap(Customer.class, AddCustomerOutput.class)
                 .byDefault()
                 .register();
     }

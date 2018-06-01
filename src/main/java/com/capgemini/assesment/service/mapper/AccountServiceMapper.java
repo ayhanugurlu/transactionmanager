@@ -1,16 +1,12 @@
 package com.capgemini.assesment.service.mapper;
 
 import com.capgemini.assesment.data.entity.Account;
-import com.capgemini.assesment.data.entity.Customer;
 import com.capgemini.assesment.data.entity.Transaction;
 import com.capgemini.assesment.service.model.input.account.AddCustomerAccountInput;
-import com.capgemini.assesment.service.model.input.customer.AddCustomerInput;
 import com.capgemini.assesment.service.model.output.account.AddCustomerAccountOutput;
 import com.capgemini.assesment.service.model.output.account.GetAccountOutput;
 import com.capgemini.assesment.service.model.output.account.GetAccountTransactionOutput;
 import com.capgemini.assesment.service.model.output.account.TransactionOutput;
-import com.capgemini.assesment.service.model.output.customer.AddCustomerOutput;
-import com.capgemini.assesment.service.model.output.customer.GetCustomerOutput;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.ConfigurableMapper;
 import org.springframework.stereotype.Component;

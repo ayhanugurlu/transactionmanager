@@ -35,6 +35,7 @@ public class AccountRestTest {
     private AddCustomerResponse addCustomerResponse;
 
     private AddCustomerAccountResponse addCustomerAccountResponse;
+
     @Before
     public void setUp() {
         //add customer
@@ -79,14 +80,13 @@ public class AccountRestTest {
         Assert.assertEquals(addCustomerAccountResponseResponseEntity.getBody().getOwnerId(), addCustomerResponse.getCustomerId());
 
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
-        ResponseEntity<GetAccountTransactionResponse> getAccountTransactionResponseResponseEntity =  restTemplate.exchange(createURLWithPort("/getAccountTransactions/"+addCustomerAccountResponse.getId()),
+        ResponseEntity<GetAccountTransactionResponse> getAccountTransactionResponseResponseEntity = restTemplate.exchange(createURLWithPort("/getAccountTransactions/" + addCustomerAccountResponse.getId()),
                 HttpMethod.GET, entity, GetAccountTransactionResponse.class);
         Assert.assertEquals(getAccountTransactionResponseResponseEntity.getStatusCode(), HttpStatus.OK);
         Assert.assertEquals(getAccountTransactionResponseResponseEntity.getBody().getName(), "name");
         Assert.assertEquals(getAccountTransactionResponseResponseEntity.getBody().getSurname(), "surname");
         Assert.assertEquals(getAccountTransactionResponseResponseEntity.getBody().getTransactionResponses().size(), 1);
         Assert.assertEquals(getAccountTransactionResponseResponseEntity.getBody().getTransactionResponses().get(0).getAmount(), 10);
-
 
 
     }

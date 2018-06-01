@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * Created by ayhanugurlu on 5/27/18.
  */
-public interface TransactionRepository extends CrudRepository<Transaction,Long> {
+public interface TransactionRepository extends CrudRepository<Transaction, Long> {
 }

@@ -8,16 +8,16 @@ import java.util.List;
 /**
  * Created by ayhanugurlu on 5/26/18.
  */
-public abstract class TemplateException extends  Exception{
+public abstract class TemplateException extends Exception {
 
     protected List<String> errors = new ArrayList<>();
 
-    public abstract  String getErrorCode();
+    public abstract String getErrorCode();
 
     public abstract HttpStatus getHttpStatus();
 
-    public List<String> getErrors(){
-        return  errors;
+    public List<String> getErrors() {
+        return errors;
     }
 
 }

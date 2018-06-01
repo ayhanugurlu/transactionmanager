@@ -3,7 +3,6 @@ package com.capgemini.assesment.data.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,9 +19,9 @@ public class Account {
     @Id
     @GeneratedValue
     private long id;
-    @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Customer customer;
-    @OneToMany(fetch=FetchType.LAZY, mappedBy = "account")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     private Set<Transaction> transactions;
     private String currencyType;
     private long balance;

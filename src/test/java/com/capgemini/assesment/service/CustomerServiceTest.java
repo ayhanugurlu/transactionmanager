@@ -75,7 +75,7 @@ public class CustomerServiceTest {
         try {
             GetCustomerOutput getCustomerOutput = customerService.getCustomer(3);
         } catch (CustomerNotFound customerNotFound) {
-            Assert.assertEquals(customerNotFound.getErrorCode(),ErrorCode.CUSTOMER_NOT_FOUND);
+            Assert.assertEquals(customerNotFound.getErrorCode(), ErrorCode.CUSTOMER_NOT_FOUND);
 
         }
         GetCustomerOutput getCustomerOutput = customerService.getCustomer(2);
@@ -91,7 +91,7 @@ public class CustomerServiceTest {
         try {
             GetCustomerOutput getCustomerOutput = customerService.getCustomerByNationalityId("c");
         } catch (CustomerNotFound customerNotFound) {
-            Assert.assertEquals(customerNotFound.getErrorCode(),ErrorCode.CUSTOMER_NOT_FOUND);
+            Assert.assertEquals(customerNotFound.getErrorCode(), ErrorCode.CUSTOMER_NOT_FOUND);
         }
         GetCustomerOutput getCustomerOutput = customerService.getCustomerByNationalityId("a");
         Assert.assertEquals(getCustomerOutput.getId(), 2);
@@ -107,7 +107,7 @@ public class CustomerServiceTest {
         try {
             AddCustomerOutput addCustomerOutput = customerService.addCustomer(addCustomerInput);
         } catch (CustomerAlreadyExist customerAlreadyExist) {
-            Assert.assertEquals(customerAlreadyExist.getErrorCode(),ErrorCode.CUSTOMER_ALREADY_EXIST);
+            Assert.assertEquals(customerAlreadyExist.getErrorCode(), ErrorCode.CUSTOMER_ALREADY_EXIST);
         }
         addCustomerInput = AddCustomerInput.builder().name("name").surname("surname").nationalityId("c").build();
         AddCustomerOutput addCustomerOutput = customerService.addCustomer(addCustomerInput);
@@ -117,12 +117,11 @@ public class CustomerServiceTest {
         Assert.assertEquals(addCustomerOutput.getNationalityId(), "a");
 
 
-
     }
 
     @Test
     public void getAllCustomerTest() {
-        List<GetCustomerOutput>  customerOutputs = customerService.getAllCustomer();
+        List<GetCustomerOutput> customerOutputs = customerService.getAllCustomer();
         Assert.assertEquals(customerOutputs.size(), 1);
     }
 

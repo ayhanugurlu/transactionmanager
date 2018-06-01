@@ -11,8 +11,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.sleuth.Tracer;
@@ -29,14 +27,12 @@ public class TransactionRest {
 
 
     @Autowired
+    TransactionService transactionService;
+    @Autowired
     private Tracer tracer;
-
     @Autowired
     @Qualifier("transactionRestMapper")
     private MapperFacade mapperFacade;
-
-    @Autowired
-    TransactionService transactionService;
 
     @ApiOperation(value = "do transaction ",
             notes = "if account is avaliable fo transaction .<br/>")

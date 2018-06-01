@@ -15,8 +15,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.sleuth.Tracer;
@@ -34,15 +32,12 @@ public class AccountRest {
 
 
     @Autowired
+    AccountService accountService;
+    @Autowired
     private Tracer tracer;
-
     @Autowired
     @Qualifier("customerRestMapper")
     private MapperFacade mapperFacade;
-
-    @Autowired
-    AccountService accountService;
-
 
     @ApiOperation(value = "add account for customer",
             notes = "add account for customer<br/>")
@@ -62,7 +57,7 @@ public class AccountRest {
             notes = "get account transactions<br/>")
     @GetMapping("getAccountTransactions/{id}")
     public @ResponseBody
-    GetAccountTransactionResponse getAccountTransactions(@ApiParam(value = "Account id")@PathVariable(name = "id") long accountId) throws AccountNotFound {
+    GetAccountTransactionResponse getAccountTransactions(@ApiParam(value = "Account id") @PathVariable(name = "id") long accountId) throws AccountNotFound {
         log.debug("getAccountTransactions method start", tracer.getCurrentSpan().getTraceId());
         GetAccountTransactionOutput output = accountService.getAccountTransactions(accountId);
         GetAccountTransactionResponse getAccountTransactionOutput = mapperFacade.map(output, GetAccountTransactionResponse.class);

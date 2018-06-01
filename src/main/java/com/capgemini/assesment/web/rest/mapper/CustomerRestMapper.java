@@ -18,23 +18,22 @@ public class CustomerRestMapper extends ConfigurableMapper {
 
 
     protected void configure(MapperFactory factory) {
-        factory.classMap (AddCustomerRequest.class, AddCustomerInput.class)
+        factory.classMap(AddCustomerRequest.class, AddCustomerInput.class)
                 .byDefault()
                 .register();
 
-        factory.classMap (GetCustomerOutput.class, GetCustomerResponse.class)
+        factory.classMap(GetCustomerOutput.class, GetCustomerResponse.class)
                 .byDefault()
                 .register();
 
 
-        factory.classMap (AddCustomerOutput.class, AddCustomerResponse.class)
+        factory.classMap(AddCustomerOutput.class, AddCustomerResponse.class)
 
                 .field("id", "customerId")
                 .byDefault()
                 .register();
 
     }
-
 
 
 }

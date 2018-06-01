@@ -16,11 +16,11 @@ public class TransactionServiceMapper extends ConfigurableMapper {
 
     protected void configure(MapperFactory factory) {
 
-        factory.classMap (TransactionInput.class, Transaction.class)
-                .field("accountId","account.id")
+        factory.classMap(TransactionInput.class, Transaction.class)
+                .field("accountId", "account.id")
                 .byDefault()
                 .register();
-        factory.classMap (Transaction.class, TransactionResultOutput.class)
+        factory.classMap(Transaction.class, TransactionResultOutput.class)
                 .byDefault()
                 .register();
 
