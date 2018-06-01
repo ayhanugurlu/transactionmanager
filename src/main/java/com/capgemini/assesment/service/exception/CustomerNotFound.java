@@ -10,11 +10,11 @@ import static com.capgemini.assesment.service.exception.ErrorCode.CUSTOMER_NOT_F
 public class CustomerNotFound extends TemplateException {
 
     public CustomerNotFound(String nationalityId){
-        errors.add(String.format(String.format("Customer Not Found.  Nationality Id %d",nationalityId)));
+        errors.add(String.format("Customer Not Found.  Nationality Id %d",nationalityId));
     }
 
     public CustomerNotFound(long customerId){
-        errors.add(String.format(String.format("Customer Not Found.  Customer Id %d",customerId)));
+        errors.add(String.format("Customer Not Found.  Customer Id %d",customerId));
     }
     @Override
     public String getErrorCode() {
